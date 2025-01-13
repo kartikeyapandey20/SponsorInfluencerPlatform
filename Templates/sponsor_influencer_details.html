@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button-container {
+            text-align: right;
+            margin: 20px 0;
+        }
+        .button-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            background-color: #007bff;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Influencer Details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">Influencer Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Influencer ID</th>
+                    <td>{{ inf.InfluencerID }}</td>
+                </tr>
+                <tr>
+                    <th>Influencer Name</th>
+                    <td>{{ inf.Name }}</td>
+                </tr>
+                <tr>
+                    <th>Following</th>
+                    <td>{{ inf.Followers }}</td>
+                </tr>
+                <tr>
+                    <th>Previous Associations</th>
+                    <td>
+                        {% if Associations %}
+                        <ul>
+                            {% for i in Associations %}
+                            <li><a href="/sponsor/campaign/campaign_details/{{ sponsor_ID }}/{{ i.CampaignID }}">{{ i.Name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        No Previous Associations
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="javascript:history.back()" class="back-button">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

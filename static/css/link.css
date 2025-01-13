@@ -1,0 +1,11 @@
+/* link.css */
+
+a {
+    color: black; /* Blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+

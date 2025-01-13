@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .go-back {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        .go-back:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ influencer.Name }}'s Profile</h1>
+        <form id="profileForm" action="/influencer/profile/edit/{{ influencer.InfluencerID }}" method="POST">
+            <section id="basic-info" class="form-section">
+                <h2>Personal Information</h2>
+                <p><strong>Influencer ID:</strong> <input type="text" name="name" value="{{ influencer.InfluencerID }}" disabled></p>
+                <p><strong>Name:</strong> <input type="text" name="name" value="{{ influencer.Name }}" disabled></p>
+                <p><strong>Email:</strong> <input type="email" name="email" value="{{ influencer.Email }}"></p>
+                <p><strong>Phone No:</strong> <input type="text" name="phone" value="{{ influencer.PhoneNo }}"></p>
+            </section>
+
+            <section id="about" class="form-section">
+                <h2>About Me</h2>
+                <textarea id="bio" name="bio" rows="4">{{ influencer.Bio }}</textarea>
+            </section>
+
+            <div style="text-align: center;">
+                <button type="submit">Save</button>
+                <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" class="go-back">Go Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

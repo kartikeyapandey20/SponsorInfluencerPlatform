@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Info</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/link.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #007bff; /* Blue background for table headers */
+            color: #fff; /* White text color */
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            box-sizing: border-box;
+            display: inline-block;
+            border: none;
+        }
+        .view-ad-requests {
+            background-color: #0a1521;
+        }
+        .create-ad-request {
+            background-color: #28a745;
+        }
+        .edit-campaign {
+            background-color: #ffc107;
+        }
+        .close-campaign {
+            background-color: #dc3545;
+            cursor: pointer;
+        }
+        .immutable {
+            background-color: gray; 
+            cursor: not-allowed;
+        }
+        .immutable:hover {
+            pointer-events: none;
+        }
+        .back-button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            margin: 20px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align: center;">Campaign Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Campaign ID</th>
+                    <td>{{ campaign.CampaignID }}</td>
+                </tr>
+                <tr>
+                    <th>Campaign Name</th>
+                    <td>{{ campaign.Name }}</td>
+                </tr>
+                <tr>
+                    <th>Start Date</th>
+                    <td>{{ campaign.StartDate }}</td>
+                </tr>
+                <tr>
+                    <th>End Date</th>
+                    <td>{{ campaign.EndDate }}</td>
+                </tr>
+                <tr>
+                    <th>Budget</th>
+                    <td>{{ campaign.Budget }}</td>
+                </tr>
+                {% if influencer %}
+                <tr>
+                    <th>Influencer</th>
+                    <td><a href="/sponsor/influencer/{{ sponsor_ID }}/{{ campaign.InfluencerID }}">{{ influencer.Name }}</a></td>
+                </tr>
+                <tr>
+                    <th>Outreach</th>
+                    <td>{{ influencer.Followers }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th>Influencer</th>
+                    <td><strong>NA</strong></td>
+                </tr>
+                <tr>
+                    <th>Outreach</th>
+                    <td><strong>NA</strong></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Goals</th>
+                    <td>{{ campaign.Goal }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ campaign.Description }}</td>
+                </tr>
+                <tr>
+                    <th>Visibility</th>
+                    <td>{{ campaign.Visibility }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="button-group">
+                            <a href="/sponsor/ad_req/view/{{ sponsor_ID }}/{{ campaign.CampaignID }}" class="button view-ad-requests">
+                                View Ad-Requests
+                            </a>
+                            <a href="/sponsor/ad_req/create/{{ sponsor_ID }}/{{ campaign.CampaignID }}" class="button create-ad-request {% if not active %} immutable {% endif %}">
+                                Create Ad-Request
+                            </a>
+                            <a href="/sponsor/campaign/edit/{{ sponsor_ID }}/{{ campaign.CampaignID }}" class="button edit-campaign {% if not active %} immutable {% endif %}">
+                                Edit Campaign
+                            </a>
+                            <form action="/sponsor/campaign/delete/{{ sponsor_ID }}/{{ campaign.CampaignID }}" method="POST">
+                                <input type="hidden" name="action" value="close">
+                                <button type="submit" class="button close-campaign {% if not active %} immutable {% endif %}" onclick="return confirm('Are you sure you want to close this campaign?');">
+                                    Close Campaign
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/sponsor/campaigns/{{ sponsor_ID }}" class="back-button">Go Back</a>
+    </div>
+</body>
+</html>

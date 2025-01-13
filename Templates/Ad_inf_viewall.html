@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 2000px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+            table-layout: fixed; /* Ensures content does not overflow */
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            overflow: hidden; /* Prevents overflow */
+            text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+            white-space: nowrap; /* Prevents text wrapping */
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 2px solid #0056b3;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: nowrap; /* Ensures buttons stay in a row */
+            align-items: center;
+        }
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .apply {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+        }
+        .apply:hover {
+            background: linear-gradient(135deg, #388e3c, #4caf50);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .negotiate {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+        .negotiate:hover {
+            background: linear-gradient(135deg, #f57c00, #ff9800);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .go-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .go-back:hover {
+            background-color: darkgreen;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="/influencer/home/{{ influencer_ID }}" class="go-back">Go Back</a>
+    <div class="container">
+        <h1>Ad Requests</h1>
+        {% if ad_requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Campaign ID</th>
+                    <th style="width: 20%;">Campaign Name</th>
+                    <th style="width: 15%;">Title</th>
+                    <th style="width: 25%;">Description</th>
+                    <th style="width: 15%;">Requirements</th>
+                    <th style="width: 10%;">Payment</th>
+                    <th style="width: 20%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in ad_requests %}
+                <tr>
+                    <td>{{ request.CampaignID }}</td>
+                    <td>{{ request.campaign.Name }}</td>
+                    <td>{{ request.Title }}</td>
+                    <td>{{ request.Description }}</td>
+                    <td>{{ request.Requirements }}</td>
+                    <td>₹{{ request.Payment }}</td>
+                    <td class="actions">
+                        <form action="/influencer/apply/{{ influencer_ID }}/{{ request.RequestID }}" method="post">
+                            <button type="submit" class="button apply" onclick="return confirm('Are you sure you want to apply for this ad request?');">Apply</button>
+                        </form>
+                        <a href="/ad_request/influencer/create_negotiation/{{ influencer_ID }}/{{ request.RequestID }}" class="button negotiate">Negotiate</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No ad requests available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

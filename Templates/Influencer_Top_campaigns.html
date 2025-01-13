@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Campaigns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: -20px -20px 20px -20px; /* Extend background to container edges */
+            border-radius: 8px 8px 0 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #007bff; /* Blue background for table headers */
+            color: #fff; /* White text color */
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            background-color: #45a049;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+        .back-button-container {
+            text-align: right;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Campaigns</h1>
+        <table id="active">
+            <tr>
+                <th>Campaign ID</th>
+                <th>Campaign Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>            
+                <th>Brand/Sponsor</th>
+                <th>Earnings</th>
+            </tr>
+            {% for camp, spon in top %}
+            <tr>
+                <td>{{ camp.CampaignID }}</td>
+                <td><a href="/influencer/campaign/campaign_details/{{ influencer_ID }}/{{ camp.CampaignID }}">{{ camp.Name }}</a></td>
+                <td>{{ camp.StartDate }}</td>
+                <td>{{ camp.EndDate }}</td>
+                <td><a href="/influencer/sponsor/{{ influencer_ID }}/{{ spon.SponsorID }}">{{ spon.Name }}</a></td>
+                <td>{{ camp.Budget }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="back-button-container">
+            <a href="javascript:history.back()" class="button back-button">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

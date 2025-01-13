@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Campaigns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        table {
+            margin: 20px auto;
+            width: 75%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd; /* Lighter border color */
+            padding: 12px; /* Consistent padding */
+            text-align: center;
+        }
+        table th {
+            background-color: #007bff; /* Header background color */
+            color: #fff;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra striping for rows */
+        }
+        table tr:hover {
+            background-color: #ddd; /* Hover effect */
+        }
+        table a {
+            color: #007bff; /* Link color */
+            text-decoration: none;
+        }
+        table a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+        .button-container {
+            text-align: right;
+            padding: 20px;
+        }
+        .button-container a {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #45a049;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Top Campaigns</h1>
+    <table id="top">
+        <tr>
+            <th>Campaign ID</th>
+            <th>Campaign Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Influencer</th>
+            <th>Audience Outreach</th>
+            <th>Budget</th>
+        </tr>
+        {% for camp, inf in top %}
+        <tr>
+            <td>{{ camp.CampaignID }}</td>
+            <td><a href="/sponsor/campaign/campaign_details/{{ sponsor_ID }}/{{ camp.CampaignID }}">{{ camp.Name }}</a></td>
+            <td>{{ camp.StartDate }}</td>
+            <td>{{ camp.EndDate }}</td>
+            <td><a href="/sponsor/influencer/{{ sponsor_ID }}/{{ inf.InfluencerID }}">{{ inf.Name }}</a></td>
+            <td>{{ camp.Outreach }}</td>
+            <td>{{ camp.Budget }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="button-container">
+        <a href="javascript:history.back()">Go Back</a>
+    </div>
+</body>
+</html>

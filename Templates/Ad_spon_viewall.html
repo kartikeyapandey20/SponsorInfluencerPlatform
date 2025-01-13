@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Ad Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 2000px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+            table-layout: fixed; /* Ensures content does not overflow */
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            overflow: hidden; /* Prevents overflow */
+            text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+            white-space: nowrap; /* Prevents text wrapping */
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 2px solid #0056b3;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .actions a {
+            margin-right: 10px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+        }
+        .open {
+            background-color: #17a2b8;
+        }
+        .open:hover {
+            background-color: #138496;
+        }
+        .go-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .go-back:hover {
+            background-color: darkgreen;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="/sponsor/home/{{ sponsor_ID }}" class="go-back">HOME</a>
+    <div class="container">
+        <h1>All Ad Requests</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Campaign Name</th>
+                    <th style="width: 30%;">Influencer</th>
+                    <th style="width: 40%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad in negotiations %}
+                <tr>
+                    <td><a href="/sponsor/campaign/campaign_details/{{ sponsor_ID }}/{{ ad.ad_request.CampaignID }}">{{ ad.ad_request.campaign.Name }}</a></td>
+                    <td><a href="/sponsor/influencer/{{ sponsor_ID }}/{{ ad.InfluencerID }}">{{ ad.influencer.Name }}</a></td>
+                    <td><a href="/sponsor/ad_request/negotiations/view/{{ sponsor_ID }}/{{ ad.RequestID }}/{{ ad.InfluencerID }}" class="open">Open</a></td>    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

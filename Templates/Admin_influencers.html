@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .table-container {
+            width: 80%;
+            max-height: 500px; /* Adjust the max height as needed */
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: large;
+        }
+        .home-link:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Influencers</h1>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Influencer ID</th>
+                <th>Influencer Name</th>
+                <th>Joining Date</th>
+                <th>Email</th>
+                <th>Phone No</th>
+                <th>Total Campaigns</th>
+                <th>Following</th>
+                <th>Earnings</th>
+            </tr>
+            {% for inf, earnings, campaigns in influencers %}
+            <tr>
+                <td>{{ inf.InfluencerID }}</td>
+                <td><a href="/admin/influencer/influencer_details/{{ admin_ID }}/{{ inf.InfluencerID }}">{{ inf.Name }}</a></td>
+                <td>{{ inf.JoiningDate }}</td>
+                <td>{{ inf.Email }}</td>
+                <td>{{ inf.PhoneNo }}</td>
+                <td>{{ campaigns }}</td>
+                <td>{{ inf.Followers }}</td>
+                <td>{{ earnings }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <a href="/admin/home/{{ admin_ID }}" class="home-link">HOME</a>
+</body>
+</html>

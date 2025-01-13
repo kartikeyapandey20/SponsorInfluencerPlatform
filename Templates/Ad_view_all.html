@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Campaigns</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            position: relative;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+            table-layout: fixed;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 2px solid #0056b3;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .edit {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+        }
+        .edit:hover {
+            background: linear-gradient(135deg, #388e3c, #4caf50);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .delete {
+            background: linear-gradient(135deg, #795548, #5d4037);
+        }
+        .delete:hover {
+            background: linear-gradient(135deg, #5d4037, #795548);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .go-back {
+            display: block;
+            background-color: beige;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .go-back:hover {
+            background-color: #e0d8d8;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .no-requests {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        .table-header {
+            text-align: center;
+            font-size: 1.5em;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border-bottom: 2px solid #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if ad_requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="7" class="table-header">All Ad Requests</th>
+                </tr>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Requirements</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad, camp in ad_requests %}
+                <tr>
+                    <td>{{ ad.RequestID }}</td>
+                    <td>{{ ad.Title }}</td>
+                    <td>{{ ad.Description }}</td>
+                    <td>{{ ad.Requirements }}</td>
+                    <td>{{ ad.Payment }}</td>
+                    <td>{{ ad.Status }}</td>
+                    <td>
+                        {% if ad.Status == 'Pending' %}
+                        <div class="button-container">
+                            <a href="/sponsor/ad_req/edit/{{ camp.SponsorID }}/{{ ad.RequestID }}" class="button edit">Edit</a>
+                            <form action="/sponsor/ad_req/delete/{{ camp.SponsorID }}/{{ ad.RequestID }}" method="post">
+                                <input type="hidden" name="action" value="close">
+                                <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to close this request?')">
+                                    Close
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/sponsor/campaign/campaign_details/{{ sponsor_ID }}/{{ campaign_ID }}" class="go-back">Go Back</a>
+        {% else %}
+        <p class="no-requests">No Ad Requests</p>
+        {% endif %}
+    </div>
+</body>
+</html>

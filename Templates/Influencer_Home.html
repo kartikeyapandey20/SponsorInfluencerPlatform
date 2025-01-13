@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            height: 100vh; /* Full height */
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0; /* Match spacing from Admin Dashboard */
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .sidebar div {
+            margin: 20px 0; /* Match spacing from Admin Dashboard */
+            width: 100%;
+            text-align: center;
+        }
+        .main-content {
+            flex-grow: 1;
+            margin-left: 200px; /* Space for sidebar */
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+        .header {
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header h2 {
+            margin: 0;
+        }
+        .search-bar {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .search-bar input[type="text"] {
+            width: 600px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .search-bar button {
+            padding: 6px 12px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+        .content {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .profile, .featured-adrequests, .campaigns {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            width: 200px;
+            margin: 10px;
+        }
+        .whats-new {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            width: calc(100% - 40px);
+            margin: 10px;
+        }
+        .profile img, .featured-adrequests img,.campaigns img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            background-color: #ccc;
+        }
+        .link {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div><a href="/influencer/profile/{{ influencer.InfluencerID }}">Profile</a></div>
+        <div><a href="/influencer/campaigns/{{ influencer.InfluencerID }}">My Campaigns</a></div>
+        <div><a href="/influencer/ad_request/view_all/{{ influencer.InfluencerID }}">Ad Requests</a></div>
+        <div><a href="/logout" onclick="return confirm('Logout?');">Logout</a></div>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h2>Welcome to Your Dashboard! {{ influencer.Name }}</h2>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search" name="search" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <div class="content">
+            <div class="profile">
+                {% if influencer.ProfilePicLink %}
+                    <img id="profile-pic" src="{{ url_for('static', filename='images/Influencer/' ~ influencer.ProfilePicLink) }}" alt="Profile Picture">
+                {% else %}
+                    <img id="profile-pic" src="{{ url_for('static', filename='images/Influencer/Default.png') }}" alt="Profile Picture">
+                {% endif %}
+                <h3><a href="/influencer/profile/{{ influencer.InfluencerID }}">My Profile</a></h3>
+            </div>
+            <div class="featured-adrequests">
+                <img src="{{ url_for('static', filename='images/Ad_req.jpeg') }}" alt="image">
+                <h3><a href="/influencer/ad_request/view_all/{{ influencer.InfluencerID }}">View Ad Requests</a></h3>
+            </div>
+            <div class="campaigns">
+                <img src="{{ url_for('static', filename='images/campaigns.jpeg') }}" alt="image">
+                <h3><a href="/influencer/campaigns/{{ influencer.InfluencerID }}">My Campaigns</a></h3>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

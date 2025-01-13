@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin: 0;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .field input[type="text"],
+        .field input[type="email"],
+        .field textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .field textarea {
+            resize: vertical;
+        }
+        .field input[disabled] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .actions .button {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #fff;
+            border: none;
+        }
+        .actions .button.save {
+            background-color: #4caf50;
+        }
+        .actions .button.save:hover {
+            background-color: #45a049;
+        }
+        .actions .button.go-back {
+            background-color: #007bff;
+        }
+        .actions .button.go-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ sponsor.Name }}'s Profile</h1>
+        <form id="profileForm" action="/sponsor/profile/edit/{{ sponsor.SponsorID }}" method="POST">
+            <section id="basic-info">
+                <h2>Personal Information</h2>
+                <div class="field">
+                    <label for="ID">Sponsor ID:</label>
+                    <input type="text" id="ID" name="ID" value="{{ sponsor.SponsorID }}" disabled>
+                </div>
+                <div class="field">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ sponsor.Name }}" disabled>
+                </div>
+                <div class="field">
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand" value="{{ sponsor.Brand }}">
+                </div>
+                <div class="field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ sponsor.Email }}">
+                </div>
+                <div class="field">
+                    <label for="phone">Phone No:</label>
+                    <input type="text" id="phone" name="phone" value="{{ sponsor.PhoneNo }}">
+                </div>
+            </section>
+
+            <section id="about">
+                <h2>About Your Brand</h2>
+                <div class="field">
+                    <textarea id="description" name="description" rows="4">{{ sponsor.BrandDescription }}</textarea>
+                </div>
+            </section>
+
+            <div class="actions">
+                <button type="submit" class="button save">Save</button>
+                <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" class="button go-back">Go Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

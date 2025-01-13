@@ -1,0 +1,53 @@
+/* sidebar.css */
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    background-color: #333; /* Dark Gray */
+    padding-top: 20px;
+    position: fixed;
+    overflow-y: auto;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.sidebar div {
+    font-size: 14px; /* Slightly smaller text */
+    background-color: #444; /* Medium Gray */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px;
+    color: #fff; /* White text */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.sidebar h2 {
+    font-size: 1.1em;
+    margin: 10px 0;
+    color: #ddd; /* Light Gray for headers */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 5px 0;
+}
+
+.sidebar a {
+    color: #eee; /* Very Light Gray for links */
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.sidebar a:hover {
+    background-color: #555; /* Slightly lighter gray on hover */
+    color: #fff; /* White text on hover */
+}

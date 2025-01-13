@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Campaign Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .immutable {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .button-container a {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
+        .button-container button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: gold;
+            color: #fff;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #f0c14b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Campaign</h1>
+    <form action="/sponsor/campaign/edit/{{ sponsor_ID }}/{{ campaign.CampaignID }}" method="post" id="edit-form">
+        <!-- Immutable Fields -->
+        <label for="campaignID">Campaign ID</label>
+        <input type="text" id="campaignID" name="campaignID" value="{{ campaign.CampaignID }}" readonly class="immutable">
+
+        <label for="campaignName">Campaign Name</label>
+        <input type="text" id="campaignName" name="campaignName" value="{{ campaign.Name }}" readonly class="immutable">
+
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" name="startDate" value="{{ campaign.StartDate }}" {% if started %} readonly class="immutable" {% endif %}>
+
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" name="endDate" value="{{ campaign.EndDate }}" required>
+        
+        <label for="sponsorID">Sponsor ID</label>
+        <input type="text" id="sponsorID" name="sponsorID" value="{{ campaign.SponsorID }}" readonly class="immutable">
+
+        <label for="influencerID">Influencer ID</label>
+        <input type="text" id="influencerID" name="influencerID" value="{{ campaign.InfluencerID }}" readonly class="immutable">
+
+        <label for="budget">Budget (₹)</label>
+        <input type="number" id="budget" name="budget" step="0.01" value="{{ campaign.Budget }}" {% if not campaign.InfluencerID %} required {% else %} readonly class="immutable" {% endif %} >
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" required>{{ campaign.Description }}</textarea>
+
+        <label for="goals">Goals</label>
+        <textarea id="goals" name="goals" rows="4" required>{{ campaign.Goal }}</textarea>
+
+        <label for="visibility">Visibility</label>
+        <select id="visibility" name="visibility" required>
+            <option value="Public" {% if campaign.Visibility == 'Public' %} selected {% endif %}>Public</option>
+            <option value="Private" {% if campaign.Visibility == 'Private' %} selected {% endif %}>Private</option>
+        </select>
+
+        <div class="button-container">
+            <button type="submit">Save Changes</button>
+            <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');">Go Back</a>
+        </div>
+    </form>
+</body>
+</html>

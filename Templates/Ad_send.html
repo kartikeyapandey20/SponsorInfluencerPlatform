@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Ad Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Prevents body overflow */
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            height: 90vh; /* Use 90% of the viewport height */
+            max-height: 100%; /* Ensures the container doesn’t exceed viewport height */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            overflow-y: auto; /* Adds vertical scrollbar if needed */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            text-align: center;
+        }
+        .immutable {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .no-campaigns {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .go-back {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .go-back a {
+            color: green;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if campaigns %}
+            <h1>Send Ad Request</h1>
+            <form action="/sponsor/send_req/{{ sponsor_ID }}/{{ influencer_ID }}" method="post">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <label for="campaign">Campaign</label>
+                <select id="campaign" name="campaignID" required>
+                    <option value="" disabled selected>Select a Campaign</option>
+                    {% for campaign in campaigns %}
+                        <option value="{{ campaign.CampaignID }}">{{ campaign.Name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="requirements">Requirements</label>
+                <textarea id="requirements" name="requirements" rows="4" required></textarea>
+
+                <label for="payment">Payment (₹)</label>
+                <input type="number" id="payment" name="payment" step="0.01" required>
+
+                <label for="status">Status</label>
+                <input type="text" id="status" name="status" value="Pending" readonly class="immutable">
+
+                <div class="button-container">
+                    <button type="submit">Send Request</button>
+                </div>
+            </form>
+        {% else %}
+            <h1>No Active Campaigns currently</h1> 
+            <p><a href="/sponsor/campaign/create/{{ sponsor_ID }}">Create some before sending an ad request?</a></p>
+        {% endif %}
+        <div class="go-back">
+            <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

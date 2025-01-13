@@ -1,0 +1,52 @@
+/* body.css */
+
+body {
+    background-color: #f0f2f5; /* Very Light Gray */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Dark Gray for text */
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    background-color: cornsilk; /* White background for content */
+    margin-left: 250px; /* Match sidebar width */
+    padding: 20px;
+    min-height: 100vh; /* Full viewport height */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+
+}
+
+h1, h2 {
+    color: #333; /* Dark Gray for headings */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+
+h2 {
+    font-size: 1.5em;
+    border-bottom: 2px solid #ddd; /* Light Gray underline */
+    padding-bottom: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.link-container {
+    margin-top: 20px;
+}
+
+.link-container a {
+    color: #007bff; /* Blue for links */
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.link-container a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sponsor Dashboard</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidebar.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/general.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/table.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/link.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/image.css') }}">
+    <style>
+        .chart-container {
+            width: 100%;
+            height: 500px;
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .chart-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body style="text-align: center;">
+    <div class="sidebar">
+        <div>
+            <a href="/sponsor/profile/edit/{{ sponsor.SponsorID }}" style="width: 100%;">Edit Profile</a>
+        </div>
+        <div style="width: 100%; margin-top: 30px;">
+            <!-- Placeholder for image -->
+            <div class="image-container" style="height: 200px;">
+                <a href="/sponsor/profile/{{ sponsor.SponsorID }}" style="width: 100%; height: 150px;">
+                    {% if sponsor.ProfilePicLink %}
+                        <img id="profile-pic" src="{{ url_for('static', filename='images/Sponsor/' ~ sponsor.ProfilePicLink) }}" alt="Profile Picture">
+                    {% else %}
+                        <img id="profile-pic" src="{{ url_for('static', filename='images/Sponsor/Default.png') }}" alt="Profile Picture">
+                    {% endif %}
+                </a>
+                <div class="caption">Profile</div>
+            </div>
+        </div>
+
+        <!-- Campaigns -->
+        <div style="width: 100%; position: absolute; margin-top: 50px;">
+            <!-- Placeholder for image -->
+            <div class="image-container" style="height: 200px;">
+                <a href="/sponsor/campaigns/{{ sponsor.SponsorID }}" style="width: 100%;height: 150px;">
+                    <img src="{{ url_for('static', filename='images/campaigns.jpeg') }}" alt="image">
+                </a>
+                <div class="caption">Campaigns</div>
+            </div>
+            
+            
+        </div>
+    </div>
+        <div style="height: 10px; background-color: #ccc; margin-bottom: 10px"></div>
+        <div style="margin-bottom: 20px; text-align: center;">
+            <h2 style="margin-left: 50px; display: inline-block;">Welcome to Your Dashboard! {{ sponsor.Name }}</h2>
+            <a href="/logout" style="display: inline-block; text-align: right;margin-left: 400px; margin-right: 10px;position: absolute;">Logout</a>
+            <br>
+            <input type="text" id="search" name="search" style="width: 600px; height: 25px">
+            <button style="font-size: large;">Search</button>
+        </div>
+        <div class="chart-container">
+            <img src="{{ url_for('static', filename='images/Statistics/CampaignOutreach' ~ sponsor.SponsorID ~ '.png') }}" alt="CampaignOutreach">
+        </div>
+        <div style="clear: both;"></div>
+
+        
+        <div class="sidebar" style="right: 0; top: 0;"> 
+            <div>
+                <a href="/logout" onclick="return confirm('Are you sure?')" style="width: 100%;">Logout</a>
+            </div>
+            <div style="width: 100%; margin-top: 30px;">
+                <div class="image-container" style="height: 200px; width: 100%;">
+                    <a href="/sponsor/ad_request/view_all/{{ sponsor.SponsorID }}" style="width: 80%;height: 150px;">
+                        <img src="{{ url_for('static', filename='images/latest_negotiations.jpeg') }}" alt="image"> 
+                    </a>
+                    <div class="caption">Latest Negotiations</div>
+                </div>
+            </div>
+
+            <div style="width: 100%; position: absolute; margin-top: 50px;">
+                <div class="image-container" style="height: 200px;">
+                    <a href="/sponsor/influencers/{{ sponsor.SponsorID }}" style="width: 100%;height: 150px;">
+                        <img src="{{ url_for('static', filename='images/Influencer/Default.png') }}" alt="image">
+                    </a>
+                    <div class="caption">Influencers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Ad Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden; /* Prevents body overflow */
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh; /* Ensures the container doesn't overflow the viewport height */
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            overflow: auto; /* Allows scrolling if content overflows */
+            box-sizing: border-box;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .field p {
+            margin: 0;
+            padding: 8px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .accept {
+            background: linear-gradient(135deg, #4caf50, #388e3c);
+        }
+        .accept:hover {
+            background: linear-gradient(135deg, #388e3c, #4caf50);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .negotiate {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+        .negotiate:hover {
+            background: linear-gradient(135deg, #f57c00, #ff9800);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .reject {
+            background: linear-gradient(135deg, #f44336, #c62828);
+        }
+        .reject:hover {
+            background: linear-gradient(135deg, #c62828, #f44336);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .immutable {
+            background: #9e9e9e;
+            pointer-events: none;
+        }
+        .immutable:hover {
+            cursor: not-allowed;
+        }
+        .go-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .go-back:hover {
+            background-color: darkgreen;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" class="go-back">Go Back</a>
+    <div class="container">
+        <h1>Ad Request Details</h1>
+        
+        <div class="field">
+            <label>Request ID:</label>
+            <p>{{ ad_request.RequestID }}</p>
+        </div>
+
+        <div class="field">
+            <label>Campaign:</label>
+            <p>{{ ad_request.campaign.Name }}</p>
+        </div>
+
+        <div class="field">
+            <label>Sponsor:</label>
+            <p>{{ ad_request.campaign.sponsor.Name }}</p>
+        </div>
+        
+        <div class="field">
+            <label>Title:</label>
+            <p>{{ ad_request.Title }}</p>
+        </div>
+        
+        <div class="field">
+            <label>Description:</label>
+            <p>{{ ad_request.Description }}</p>
+        </div>
+        
+        <div class="field">
+            <label>Requirements:</label>
+            <p>{{ ad_request.Requirements }}</p>
+        </div>
+        
+        <div class="field">
+            <label>Payment:</label>
+            <p>₹{{ ad.Current_Negotiation }}</p>
+        </div>
+        
+        <div class="field">
+            <label>Status:</label>
+            <p>{{ ad_request.Status }}</p>
+        </div>
+
+        <div class="field">
+            <label>Last Negotiation:</label>
+            <p>{{ ad.Sender }} at {{ ad.Time.replace(microsecond=0) }}</p>
+        </div>
+        
+        <div class="actions">
+            <form action="/ad_request/influencer_accept/{{ influencer_ID }}/{{ ad_request.RequestID }}" method="post">
+                <button type="submit" class="button accept" onclick="return confirm('Are you sure you want to accept this ad request?');">Accept</button>
+            </form>
+            
+            <a href="/ad_request/influencer_negotiate/{{ influencer_ID }}/{{ ad_request.RequestID }}" class="button negotiate {% if ad.Sender != 'Sponsor' %} immutable {% endif %}">Negotiate</a>
+        
+            <form action="/ad_request/influencer_reject/{{ influencer_ID }}/{{ ad_request.RequestID }}" method="post">
+                <button type="submit" class="button reject" onclick="return confirm('Are you sure you want to reject this ad request?');">Reject</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

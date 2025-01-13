@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Options</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+        }
+        .options {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        .option {
+            text-align: center;
+            cursor: pointer;
+        }
+        .option img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        .option p {
+            margin-top: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .login-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="options">
+            <div class="option" onclick="location.href='/home/influencer/signup'">
+                <img id="profile-pic" src="../static/images/Influencer/Default.png" alt="Profile Picture">
+                <p>Influencer</p>
+            </div>
+            <div class="option" onclick="location.href='/home/sponsor/signup'">
+                <img id="profile-pic" src="../static/images/Sponsor/Default.png" alt="Profile Picture">
+                <p>Sponsor</p>
+            </div>
+        </div>
+        <a href="/login" class="login-button">Login</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiate Ad Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden; /* Prevents body overflow */
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh; /* Ensures the container doesn't overflow the viewport height */
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* Allows scrolling if content overflows */
+            box-sizing: border-box; /* Ensures padding is included in width */
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .field p, .field input {
+            margin: 0;
+            padding: 8px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        .field input {
+            width: calc(100% - 18px);
+            height: 25px;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .back {
+            background-color: green;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+        }
+        .back:hover {
+            background-color: darkgreen;
+        }
+        .negotiate {
+            background-color: orange;
+        }
+        .negotiate:hover {
+            background-color: darkorange;
+        }
+        .immutable {
+            background-color: grey;
+            pointer-events: none;
+        }
+        .immutable:hover {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" class="button back">Go Back</a>
+    <div class="container">
+        <h1>Negotiate Ad Request</h1>
+        <form action="/ad_request/influencer/create_negotiation/{{ influencer_ID }}/{{ ad_request.RequestID }}" method="post">
+            <div class="field">
+                <label>Request ID:</label>
+                <p>{{ ad_request.RequestID }}</p>
+            </div>
+
+            <div class="field">
+                <label>Campaign:</label>
+                <p>{{ ad_request.campaign.Name }}</p>
+            </div>
+    
+            <div class="field">
+                <label>Sponsor:</label>
+                <p>{{ ad_request.campaign.sponsor.Name }}</p>
+            </div>
+
+            <div class="field">
+                <label>Title:</label>
+                <p>{{ ad_request.Title }}</p>
+            </div>
+
+            <div class="field">
+                <label>Description:</label>
+                <p>{{ ad_request.Description }}</p>
+            </div>
+
+            <div class="field">
+                <label>Requirements:</label>
+                <p>{{ ad_request.Requirements }}</p>
+            </div>
+
+            <div class="field">
+                <label>Payment:</label>
+                <p>₹{{ ad_request.Payment }}</p>
+            </div>
+
+            <div class="field">
+                <label>Proposed Payment:</label>
+                <p>
+                    <input type="number" name="proposed_payment" step="1" min="{{ ad_request.Payment }}" required>
+                </p>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="button negotiate">Submit Proposal</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ad Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh; /* Ensures the container doesn't overflow the viewport height */
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* Allows scrolling if content overflows */
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px; /* Reduced margin to ensure heading is visible */
+            font-size: 24px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], 
+        input[type="number"], 
+        textarea {
+            width: 100%; /* Adjusted to fit within container */
+            box-sizing: border-box; /* Ensures padding and border are included in width */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .immutable {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .button-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: gold;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: darkgoldenrod;
+        }
+        .go-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .go-back:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" class="go-back">Go Back</a>
+    <div class="container">
+        <h1>Edit Ad Request</h1>
+        <form action="/sponsor/ad_req/edit/{{ sponsor_ID }}/{{ ad_request.RequestID }}" method="post">
+            <!-- Immutable Fields -->
+            <label for="requestID">Request ID</label>
+            <input type="text" id="requestID" name="RequestID" value="{{ ad_request.RequestID }}" readonly class="immutable">
+
+            <label for="title">Title</label>
+            <input type="text" id="title" name="Title" value="{{ ad_request.Title }}" readonly class="immutable">
+
+            <!-- Editable Fields -->
+            <label for="description">Description</label>
+            <textarea id="description" name="Description" rows="4" required>{{ ad_request.Description }}</textarea>
+
+            <label for="requirements">Requirements</label>
+            <textarea id="requirements" name="Requirements" rows="4" required>{{ ad_request.Requirements }}</textarea>
+
+            <label for="payment">Payment (₹)</label>
+            <input type="number" id="payment" name="Payment" step="0.01" value="{{ ad_request.Payment }}" required>
+
+            <label for="campaignID">Campaign ID</label>
+            <input type="text" id="campaignID" name="CampaignID" value="{{ ad_request.CampaignID }}" readonly class="immutable">
+
+            <label for="status">Status</label>
+            <input type="text" id="status" name="Status" value="{{ ad_request.Status }}" readonly class="immutable">
+
+            <div class="button-container">
+                <button type="submit" class="button">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

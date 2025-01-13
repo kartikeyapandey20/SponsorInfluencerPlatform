@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Campaigns</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/link.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/image.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #0a1521;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            position: fixed;
+            height: 100%;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #1a2630;
+        }
+        .sidebar a:hover {
+            background-color: #1e2a35;
+        }
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 5px;
+        }
+        .sidebar ul li a {
+            color: #9eacb8;
+        }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            box-sizing: border-box;
+        }
+        .main-content h1 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #e9ecef;
+        }
+        .link-container {
+            margin-top: 30px;
+        }
+        .link-container a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% if sponsor %}
+    <div class="sidebar">
+        <div>
+            <a href="/sponsor/home/{{ sponsor.SponsorID }}" style="width: 100%;">HOME</a>
+        </div>
+        <div>
+            <h2>Top Influencers:</h2>
+            <ul>
+                {% for i in top_infs %}
+                <li><a href="/sponsor/influencer/{{ sponsor.SponsorID }}/{{ i.InfluencerID }}">{{ i.Name }}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="/sponsor/influencer/top/{{ sponsor.SponsorID }}" style="width: 100%;">Show All</a>
+        </div>
+        <div>
+            <h2>Top Campaigns</h2>
+            <ul>
+                {% for i in top_campaigns %}
+                <li><a href="/sponsor/campaign/campaign_details/{{ sponsor.SponsorID }}/{{ i.CampaignID }}">{{ i.Name }}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="/sponsor/campaigns/top/{{ sponsor.SponsorID }}" style="width: 100%;">Show All</a>
+        </div>
+        <div>
+            <h2>Highest Outreach: {{ highest.Outreach }}</h2>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Your Campaigns</h1>
+        <div>
+            {% if active %}
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="7">Active Campaigns</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th>Campaign ID</th>
+                    <th>Campaign Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Influencer</th>
+                    <th>Audience Outreach</th>
+                    <th>Budget</th>
+                </tr>
+                {% for i, j in active %}
+                <tr>
+                    <td>{{ i.CampaignID }}</td>
+                    <td><a href="/sponsor/campaign/campaign_details/{{ sponsor.SponsorID }}/{{ i.CampaignID }}">{{ i.Name }}</a></td>
+                    <td>{{ i.StartDate }}</td>
+                    <td>{{ i.EndDate }}</td>
+                    {% if j.InfluencerID %}
+                    <td><a href="/sponsor/influencer/{{ sponsor.SponsorID }}/{{ i.InfluencerID }}">{{ j.Name }}</a></td>
+                    <td>{{ j.Followers }}</td>
+                    {% else %}
+                    <td><strong>NA</strong></td>
+                    <td><strong>NA</strong></td>
+                    {% endif %}
+                    <td>{{ i.Budget }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <strong>No Active Campaigns</strong>
+            {% endif %}
+        </div>
+        <div style="margin-top: 50px;">
+            {% if complete %}
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="7">Completed Campaigns</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th>Campaign ID</th>
+                    <th>Campaign Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Influencer</th>
+                    <th>Audience Outreach</th>
+                    <th>Budget</th>
+                </tr>
+                {% for i, j in complete %}
+                <tr>
+                    <td>{{ i.CampaignID }}</td>
+                    <td><a href="/sponsor/campaign/campaign_details/{{ sponsor.SponsorID }}/{{ i.CampaignID }}">{{ i.Name }}</a></td>
+                    <td>{{ i.StartDate }}</td>
+                    <td>{{ i.EndDate }}</td>
+                    <td><a href="/sponsor/influencer/{{ sponsor.SponsorID }}/{{ i.InfluencerID }}">{{ j.Name }}</a></td>
+                    <td>{{ i.Outreach }}</td>
+                    <td>{{ i.Budget }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <strong>No Completed Campaigns</strong>
+            {% endif %}
+        </div>
+        <div class="link-container">
+            <h2><a href="/sponsor/campaign/create/{{ sponsor.SponsorID }}">+ Create a new campaign</a></h2>
+        </div>
+    </div>
+    {% else %}
+    <h1>Invalid SponsorID</h1>
+    {% endif %}
+</body>
+</html>

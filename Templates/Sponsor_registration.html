@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Registration</title>
+    <style>
+        /* Resetting default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #54a0ff, #acb6e5);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 600px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* Form styles */
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-textarea {
+            resize: vertical;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            background-color: #e0e0e0;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        #profile-pic {
+            width: 200px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="form-title">Sponsor Registration</h1>
+        <form id="registration-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <img id="profile-pic" src="{{ url_for('static', filename='images/Sponsor/Default.png') }}" alt="Profile Picture">
+                <label for="profile_image" class="file-upload-label">Upload your brand logo</label>
+                <input type="file" id="profile_image" name="profile_image" class="file-upload-input">
+            </div>
+            <div class="form-group">
+                <label for="Username" class="form-label">Username:</label>
+                <input type="text" id="Username" name="Username" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="Password" class="form-label">Password:</label>
+                <input type="password" id="Password" name="Password" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="rePassword" class="form-label">Confirm Password:</label>
+                <input type="password" id="rePassword" name="rePassword" class="form-input" required>
+                <div id="password-error" class="error-message" style="display: none;">Passwords do not match</div>
+            </div>
+            <div class="form-group">
+                <label for="Email" class="form-label">Email:</label>
+                <input type="email" id="Email" name="Email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="Phone" class="form-label">Phone No:</label>
+                <input type="phone" id="Phone" name="Phone" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="Address" class="form-label">Business address:</label>
+                <textarea id="Address" name="Address" rows="5" class="form-textarea"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Brand" class="form-label">Brand:</label>
+                <input type="brand" id="brand" name="brand" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="Industry" class="form-label">Industry:</label>
+                <input type="industry" id="industry" name="industry" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="About" class="form-label">About your brand:</label>
+                <textarea id="About" name="About" rows="5" class="form-textarea"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="link" class="form-label">Website Link:</label>
+                <input type="text" id="link" name="link" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="objective" class="form-label">Marketing Objective:</label>
+                <select id="objective" name="objective" class="form-input" required>
+                    <option value="brand_awareness">Brand Awareness</option>
+                    <option value="lead_generation">Lead Generation</option>
+                    <option value="product_sales">Product Sales</option>
+                    <option value="community_building">Community Building</option>
+                    <option value="content_distribution">Content Distribution</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Register</button>
+            </div>
+            <button type="button" onclick="window.location.href='/login'">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registration-form").onsubmit = function(event) {
+            var email = document.getElementById("Email").value;
+            var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            var password = document.getElementById("Password").value;
+            var rePassword = document.getElementById("rePassword").value;
+            var passwordError = document.getElementById("password-error");
+
+            if (!email.match(emailRegex)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault(); // Prevent form submission if email is invalid
+            } else if (password !== rePassword) {
+                passwordError.style.display = 'block';
+                event.preventDefault(); // Prevent form submission if passwords do not match
+            } else {
+                passwordError.style.display = 'none';
+            }
+        }
+
+        let inputFile = document.getElementById("profile_image");
+        inputFile.onchange = function() {
+            let profilePic = document.getElementById("profile-pic");
+            profilePic.src = URL.createObjectURL(inputFile.files[0]);
+        }
+    </script>
+</body>
+
+</html>

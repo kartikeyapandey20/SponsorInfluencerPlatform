@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd; /* Borders for table headers and data cells */
+            padding: 12px; /* Example padding for better readability */
+            text-align: center; /* Center-align text within cells */
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .go-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .go-back:hover {
+            background-color: #388e3c;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            font-size: large;
+        }
+        .home-link:hover {
+            background-color: #388e3c;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        .flag-user-btn {
+            background-color: #ff4c4c; /* Red background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Padding for the button */
+            font-size: 16px; /* Increase font size */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 5px; /* Rounded corners */
+            display: inline-flex; /* Align icon and text */
+            align-items: center; /* Vertically center the icon and text */
+        }
+
+        .flag-user-btn:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }        
+
+        .flag-icon {
+            margin-right: 10px; /* Space between icon and text */
+            font-size: 18px; /* Slightly larger icon */
+            vertical-align: middle; /* Align icon with text */
+        }
+    </style>
+</head>
+<body>
+    <a href="/admin/sponsors/{{ admin_ID }}" class="go-back">Go Back</a>
+    <div class="container">
+        <h1>Sponsor Details</h1>
+        <table>
+            <tr>
+                <th>Sponsor ID</th>
+                <td>{{ spon.SponsorID }}</td>
+            </tr>
+            <tr>
+                <th>Sponsor Name</th>
+                <td>{{ spon.Name }}</td>
+            </tr>
+            <tr>
+                <th>Joining Date</th>
+                <td>{{ spon.JoiningDate }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ spon.Brand }}</td>
+            </tr>
+            <tr>
+                <th>Industry</th>
+                <td>{{ spon.Industry }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ spon.Email }}</td>
+            </tr>
+            <tr>
+                <th>Phone No</th>
+                <td>{{ spon.PhoneNo }}</td>
+            </tr>
+            <tr>
+                <th>Total Campaigns</th>
+                <td>{{ campaigns }}</td>
+            </tr>
+            <tr>
+                <th colspan="2"><a href="/admin/sponsor/sponsor_campaigns/{{ admin_ID }}/{{ spon.SponsorID }}" class="home-link">Show Campaigns</a></th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <form action="/admin/sponsor/flag_unflag/{{ admin_ID }}/{{ spon.SponsorID }}" method="POST">
+                        <input type="hidden" name="action" value="{{ 'Unflag' if spon.Flagged==1 else 'Flag' }}">
+                        <button type="submit" class="flag-user-btn" onclick="return confirm('Are you sure you want to {{ "unflag" if spon.Flagged==1 else "flag" }} this user?');">
+                            <span class="flag-icon">&#9873;</span> {{ 'Unflag User' if spon.Flagged==1 else 'Flag User' }}
+                        </button>
+                    </form>
+                </th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

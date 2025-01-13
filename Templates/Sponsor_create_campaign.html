@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Campaign Form</title>
+    <style>
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .button {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+            text-align: center;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .actions form {
+            flex: 1;
+            margin: 0 2px;
+        }
+
+    </style>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/button.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/form.css') }}">
+
+</head>
+<body>
+<h1 style="text-align: center;">Create new campaign</h1>
+<form action="/sponsor/campaign/create/{{ sponsor_ID }}" method="post" id="create-form">
+    <label for="campaignName">Campaign Name</label>
+    <input type="text" id="campaignName" name="campaignName" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="4" required></textarea>
+
+    <label for="startDate">Start Date</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <label for="endDate">End Date</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <label for="Budget">Budget (₹)</label>
+    <input type="number" id="Budget" name="Budget" step="0.01" required>
+
+    <label for="goals">Goals</label>
+    <textarea id="goals" name="goals" rows="4" required></textarea>
+
+    <label for="visibility">Visibility</label>
+    <select id="visibility" name="visibility" required>
+        <option value="Public">Public</option>
+        <option value="Private">Private</option>
+    </select>
+
+    <div class="actions">
+        <button type="submit" class="button" style="background-color: blue;">Create Campaign</button>
+    </div>
+    <a href="javascript:history.back()" onclick="return confirm('Leave without saving?');" style="margin-left: auto; margin-right: auto;">Go Back</a>
+
+</form>
+
+
+</body>
+</html>

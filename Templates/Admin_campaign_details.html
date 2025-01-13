@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd; /* Borders for table headers and data cells */
+            padding: 12px; /* Example padding for better readability */
+            text-align: center; /* Center-align text within cells */
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .go-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .go-back:hover {
+            background-color: #388e3c;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Campaign Details</h1>
+    <table>
+        <tr>
+            <th>Campaign ID</th>
+            <td>{{ camp.CampaignID }}</td>
+        </tr>
+        <tr>
+            <th>Campaign Name</th>
+            <td>{{ camp.Name }}</td>
+        </tr>
+        <tr>
+            <th>Start Date</th>
+            <td>{{ camp.StartDate }}</td>
+        </tr>
+        <tr>
+            <th>End Date</th>
+            <td>{{ camp.EndDate }}</td>
+        </tr>
+        <tr>
+            <th>Sponsor</th>
+            <td><a href="/admin/sponsor/sponsor_details/{{ admin_ID }}/{{ spon.SponsorID }}">{{ spon.Name }}</a></td>
+        </tr>
+        <tr>
+            <th>Influencer</th>
+            <td><a href="/admin/influencer/influencer_details/{{ admin_ID }}/{{ inf.InfluencerID }}">{{ inf.Name }}</a></td>
+        </tr>
+        <tr>
+            <th>Budget</th>
+            <td>{{ camp.Budget }}</td>
+        </tr>
+        <tr>
+            <th>Outreach Received</th>
+            <td>{{ camp.Outreach }}</td>
+        </tr>
+    </table>
+    <a href="javascript:history.back()" class="go-back">Go Back</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+/* image.css */
+
+.image-container {
+    width: 100%; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    position: relative;
+    overflow: hidden;
+}
+.image-container img {
+    width: 95%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the div without distortion */
+    display: block; /* Removes extra space below the image */
+}
+
+.caption {
+    margin-top: auto; /* Reduce the space between image and caption */
+    font-size: 18px; /* Increase the font size */
+    font-weight: bold; /* Make the text bold */
+    color: #333; /* Adjust the color as needed */
+}
